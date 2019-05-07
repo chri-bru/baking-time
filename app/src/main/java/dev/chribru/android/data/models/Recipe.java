@@ -5,10 +5,15 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Recipe {
 
     @SerializedName("id")
     @Expose
+    @PrimaryKey
     private Integer id;
 
     @SerializedName("name")
