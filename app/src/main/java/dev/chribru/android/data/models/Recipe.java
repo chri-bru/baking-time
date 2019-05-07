@@ -7,8 +7,11 @@ import java.util.List;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverters;
+import dev.chribru.android.data.persistance.ModelConverter;
 
 @Entity
+@TypeConverters({ModelConverter.class})
 public class Recipe {
 
     @SerializedName("id")

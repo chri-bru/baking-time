@@ -2,6 +2,7 @@ package dev.chribru.android.data.persistance;
 
 import java.util.List;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -12,10 +13,10 @@ import dev.chribru.android.data.models.Recipe;
 public interface RecipeDao {
 
     @Query("SELECT * FROM recipe")
-    List<Recipe> getAll();
+    LiveData<List<Recipe>> getAll();
 
     @Insert
-    void insert(Recipe... recipes);
+    void insert(List<Recipe> recipes);
 
     @Delete
     void delete(Recipe recipe);
