@@ -44,9 +44,18 @@ public class RecipeRepository {
      * Returns all recipes found in Room.
      * @return  the list of recipes
      */
-    public LiveData<List<Recipe>> getRecipes() {
+    public LiveData<List<Recipe>> getAll() {
         refreshData();
         return dao.getAll();
+    }
+
+    /**
+     * Returns a specific recipe based on id.
+     * @param id    the unique ID of the recipe
+     * @return      the recipe associated with the id
+     */
+    public LiveData<Recipe> get(int id) {
+        return dao.get(id);
     }
 
     private void refreshData() {
