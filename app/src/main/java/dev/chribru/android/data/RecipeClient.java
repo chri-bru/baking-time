@@ -10,7 +10,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RecipeClient {
     private final IRecipeRetrievalService api;
-    private final String baseUrl = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
+    private final String baseUrl = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/";
 
     public RecipeClient() {
         OkHttpClient client = new OkHttpClient.Builder().build();

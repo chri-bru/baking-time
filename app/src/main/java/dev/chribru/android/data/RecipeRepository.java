@@ -5,6 +5,8 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import androidx.lifecycle.LiveData;
 import androidx.room.Room;
@@ -17,12 +19,14 @@ import retrofit2.Response;
 
 public class RecipeRepository {
     private static volatile RecipeRepository instance;
+    private final Executor executor;
 
     private final RecipeClient client;
     private final RecipeDao dao;
 
     private RecipeRepository(Context context) {
         client = new RecipeClient();
+        executor = Executors.newSingleThreadExecutor();
 
         RecipeDatabase db = Room.databaseBuilder(context.getApplicationContext(),
                 RecipeDatabase.class, "recipes").build();
@@ -70,7 +74,9 @@ public class RecipeRepository {
                 @Override
                 public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
                     if (response.isSuccessful()) {
-                        dao.insert(response.body());
+                        executor.execute(() -> {
+                            dao.insert(response.body());
+                        });
                     }
                 }
 

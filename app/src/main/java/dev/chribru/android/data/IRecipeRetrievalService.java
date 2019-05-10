@@ -8,6 +8,6 @@ import retrofit2.http.GET;
 
 public interface IRecipeRetrievalService {
 
-    @GET()
+    @GET("baking.json")
     Call<List<Recipe>> getRecipes();
 }

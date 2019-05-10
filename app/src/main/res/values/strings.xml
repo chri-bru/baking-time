@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Baking Time</string>
     <string name="title_item_detail">Item Detail</string>
+
+    <!-- content descriptions for UI controls -->
+    <string name="overview_img">An image showcasing the recipe.</string>
+    <string name="overview_alt_display_icon">A cake icon to show the recipe in an exemplary way.</string>
 </resources>
