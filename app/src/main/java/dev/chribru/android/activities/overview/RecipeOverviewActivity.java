@@ -12,7 +12,6 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 
 import dev.chribru.android.activities.recipe.RecipeActivity;
-import dev.chribru.android.activities.recipe.RecipeViewModel;
 import dev.chribru.android.R;
 import dev.chribru.android.activities.recipe.RecipeDetailFragment;
 import dev.chribru.android.data.models.Recipe;
@@ -37,7 +36,7 @@ public class RecipeOverviewActivity extends AppCompatActivity implements OnRecip
 
     private SimpleItemRecyclerViewAdapter adapter;
     private List<Recipe> recipes ;
-    private RecipeViewModel viewModel;
+    private OverviewViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +55,7 @@ public class RecipeOverviewActivity extends AppCompatActivity implements OnRecip
             mTwoPane = true;
         }
 
-        viewModel = ViewModelProviders.of(this).get(RecipeViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(OverviewViewModel.class);
         viewModel.getAll().observe(this, this::setRecipes);
 
         View recyclerView = findViewById(R.id.item_list);
@@ -80,6 +79,7 @@ public class RecipeOverviewActivity extends AppCompatActivity implements OnRecip
 
         // TODO: tablet layout
         if (mTwoPane) {
+            // TODO add bundle with recipe id
             RecipeDetailFragment fragment = new RecipeDetailFragment();
             this.getSupportFragmentManager().beginTransaction()
                     .replace(R.id.item_detail_container, fragment)
@@ -87,6 +87,7 @@ public class RecipeOverviewActivity extends AppCompatActivity implements OnRecip
         } else {
             // start recipe activity passing in the ID of the recipe
             Intent intent = new Intent(this, RecipeActivity.class);
+            intent.putExtra(RecipeDetailFragment.ARG_ITEM_ID, recipe.getId());
             this.startActivity(intent);
         }
     }

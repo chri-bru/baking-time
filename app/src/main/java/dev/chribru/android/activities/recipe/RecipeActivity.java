@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.ActionBar;
+import androidx.lifecycle.ViewModelProviders;
 import dev.chribru.android.R;
 import dev.chribru.android.activities.overview.RecipeOverviewActivity;
 
@@ -31,6 +32,12 @@ public class RecipeActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+        }
+
+        if (getIntent().hasExtra(RecipeDetailFragment.ARG_ITEM_ID)) {
+            int id = getIntent().getIntExtra(RecipeDetailFragment.ARG_ITEM_ID, 1);
+            RecipeViewModel viewModel = ViewModelProviders.of(this).get(RecipeViewModel.class);
+            viewModel.select(id);
         }
 
         // savedInstanceState is non-null when there is fragment state

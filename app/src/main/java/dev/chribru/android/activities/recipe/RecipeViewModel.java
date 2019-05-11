@@ -2,8 +2,7 @@ package dev.chribru.android.activities.recipe;
 
 import android.app.Application;
 
-import java.util.List;
-
+import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import dev.chribru.android.data.RecipeRepository;
@@ -11,26 +10,20 @@ import dev.chribru.android.data.models.Recipe;
 
 public class RecipeViewModel extends AndroidViewModel {
     private final RecipeRepository repository;
+    private int selectedId;
+    private final Application app;
 
-    public RecipeViewModel(Application application) {
+    public RecipeViewModel(@NonNull Application application) {
         super(application);
+        app = application;
         repository = RecipeRepository.getInstance(application.getApplicationContext());
     }
 
-    /**
-     * Returns all recipes from the repository
-     * @return  all recipes in the repository
-     */
-    public LiveData<List<Recipe>> getAll() {
-        return repository.getAll();
+    public void select(int id) {
+        selectedId = id;
     }
 
-    /**
-     * Returns a specific recipe from the repository
-     * @param id    the id of the recipe to return
-     * @return      the recipe associated with the id
-     */
-    public LiveData<Recipe> get(int id) {
-        return repository.get(id);
+    public LiveData<Recipe> getSelected() {
+        return repository.get(selectedId);
     }
 }

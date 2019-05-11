@@ -24,9 +24,9 @@ import dev.chribru.android.data.models.Recipe;
  */
 public class RecipeDetailFragment extends Fragment {
     /**
-     * The recipe this fragment is presenting.
+     * The item id for the recipe to be used for extras
      */
-    private Recipe recipe;
+    public static String ARG_ITEM_ID = "item_id";
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -39,18 +39,20 @@ public class RecipeDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // TODO init recipe using content provider
+        RecipeViewModel viewModel = ViewModelProviders.of(getActivity()).get(RecipeViewModel.class);
+        viewModel.getSelected().observe(this, this::updateUi);
+    }
+
+    private void updateUi(Recipe recipe) {
+        if (recipe == null) {
+            return;
+        }
 
         CollapsingToolbarLayout appBarLayout = this.getActivity().findViewById(R.id.toolbar_layout);
+
         if (appBarLayout != null) {
             appBarLayout.setTitle(recipe.getName());
         }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.recipe_detail, container, false);
 
         if (recipe != null) {
             if (!TextUtils.isEmpty(recipe.getImage())) {
@@ -60,6 +62,12 @@ public class RecipeDetailFragment extends Fragment {
             // TODO add adapter
         }
 
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.recipe_detail, container, false);
         return rootView;
     }
 }
