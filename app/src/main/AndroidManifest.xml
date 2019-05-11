@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activities.RecipeActivity"
+            android:name=".activities.recipe.RecipeActivity"
             android:label="@string/title_item_detail"
             android:parentActivityName=".activities.overview.RecipeOverviewActivity"
             android:theme="@style/AppTheme.NoActionBar">

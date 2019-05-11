@@ -1,4 +1,4 @@
-package dev.chribru.android.activities;
+package dev.chribru.android.activities.recipe;
 
 import android.app.Application;
 
@@ -11,9 +11,6 @@ import dev.chribru.android.data.models.Recipe;
 
 public class RecipeViewModel extends AndroidViewModel {
     private final RecipeRepository repository;
-
-    // no recipe selected: id == -1
-    private int selectedRecipe = -1;
 
     public RecipeViewModel(Application application) {
         super(application);
@@ -35,24 +32,5 @@ public class RecipeViewModel extends AndroidViewModel {
      */
     public LiveData<Recipe> get(int id) {
         return repository.get(id);
-    }
-
-    /**
-     * Temporarily saves a recipe selection
-     * @param id    the id of the recipe to save
-     */
-    public void setSelectedRecipe(int id) {
-        selectedRecipe = id;
-    }
-
-    /**
-     * Returns the previously selected recipe.
-     * @return      the selected recipe or null if none was selected
-     */
-    public LiveData<Recipe> getSelectedRecipe() {
-        if (selectedRecipe < 0) {
-            return null;
-        }
-        return get(selectedRecipe);
     }
 }

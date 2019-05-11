@@ -9,6 +9,8 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 import androidx.room.Room;
 import dev.chribru.android.data.models.Recipe;
 import dev.chribru.android.data.persistance.RecipeDao;
@@ -24,8 +26,10 @@ public class RecipeRepository {
     private final RecipeClient client;
     private final RecipeDao dao;
 
+    private MutableLiveData<List<Recipe>> recipes = new MutableLiveData<>();
+
     private RecipeRepository(Context context) {
-        client = new RecipeClient();
+        client = new RecipeClient(context);
         executor = Executors.newSingleThreadExecutor();
 
         RecipeDatabase db = Room.databaseBuilder(context.getApplicationContext(),
@@ -49,8 +53,12 @@ public class RecipeRepository {
      * @return  the list of recipes
      */
     public LiveData<List<Recipe>> getAll() {
-        refreshData();
-        return dao.getAll();
+        // data isn't in memory yet, retrieve it from the network
+        if (recipes.getValue() == null) {
+            refreshData();
+            return dao.getAll();
+        }
+        return recipes;
     }
 
     /**
@@ -59,7 +67,12 @@ public class RecipeRepository {
      * @return      the recipe associated with the id
      */
     public LiveData<Recipe> get(int id) {
-        return dao.get(id);
+        // recipes aren't in memory yet, retrieve it from the DB
+        if (recipes.getValue() == null) {
+            return dao.get(id);
+        }
+
+        return Transformations.map(recipes, input -> input.get(id));
     }
 
     private void refreshData() {
@@ -74,9 +87,8 @@ public class RecipeRepository {
                 @Override
                 public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
                     if (response.isSuccessful()) {
-                        executor.execute(() -> {
-                            dao.insert(response.body());
-                        });
+                        recipes.setValue(response.body());
+                        executor.execute(() -> dao.insert(response.body()));
                     }
                 }
 

@@ -1,11 +1,7 @@
 package dev.chribru.android.activities.overview;
 
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.PointerIcon;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -16,46 +12,22 @@ import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
 import dev.chribru.android.R;
-import dev.chribru.android.activities.RecipeActivity;
-import dev.chribru.android.activities.fragments.RecipeDetailFragment;
 import dev.chribru.android.data.models.Recipe;
-import dev.chribru.android.dummy.DummyContent;
 
 public class SimpleItemRecyclerViewAdapter
         extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
 
-    private final RecipeOverviewActivity mParentActivity;
     private final boolean mTwoPane;
     private List<Recipe> recipes;
 
-    private final View.OnClickListener mOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            DummyContent.DummyItem item = (DummyContent.DummyItem) view.getTag();
-            if (mTwoPane) {
-                Bundle arguments = new Bundle();
-                arguments.putString(RecipeDetailFragment.ARG_ITEM_ID, item.id);
-                RecipeDetailFragment fragment = new RecipeDetailFragment();
-                fragment.setArguments(arguments);
-                mParentActivity.getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.item_detail_container, fragment)
-                        .commit();
-            } else {
-                Context context = view.getContext();
-                Intent intent = new Intent(context, RecipeActivity.class);
-                intent.putExtra(RecipeDetailFragment.ARG_ITEM_ID, item.id);
+    private final OnRecipeClickHandler mOnClickListener;
 
-                context.startActivity(intent);
-            }
-        }
-    };
-
-    SimpleItemRecyclerViewAdapter(RecipeOverviewActivity parent,
-                                  List<Recipe> recipes,
-                                  boolean twoPane) {
+    SimpleItemRecyclerViewAdapter(List<Recipe> recipes,
+                                  boolean twoPane,
+                                  OnRecipeClickHandler onClickListener) {
         this.recipes = recipes;
-        mParentActivity = parent;
         mTwoPane = twoPane;
+        mOnClickListener = onClickListener;
     }
 
     @Override
@@ -81,8 +53,7 @@ public class SimpleItemRecyclerViewAdapter
             // as the entire data set doesn't contain any image, disregard this case for now
         }
 
-        holder.itemView.setTag(recipe);
-        holder.itemView.setOnClickListener(mOnClickListener);
+        holder.itemView.setOnClickListener(holder);
     }
 
     @Override
@@ -95,7 +66,7 @@ public class SimpleItemRecyclerViewAdapter
         notifyDataSetChanged();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         final ImageView image;
         final TextView recipeName;
         final LinearLayout altDisplayContainer;
@@ -105,6 +76,12 @@ public class SimpleItemRecyclerViewAdapter
             image = view.findViewById(R.id.overview_recipe_img);
             altDisplayContainer = view.findViewById(R.id.id_container_alt_display);
             recipeName = view.findViewById(R.id.recipe_name);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Recipe recipe = recipes.get(getAdapterPosition());
+            mOnClickListener.onClick(recipe);
         }
     }
 }

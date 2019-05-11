@@ -1,6 +1,5 @@
 package dev.chribru.android.activities.overview;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -10,17 +9,13 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
 
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
-import dev.chribru.android.activities.RecipeActivity;
-import dev.chribru.android.activities.RecipeViewModel;
-import dev.chribru.android.activities.fragments.RecipeDetailFragment;
+import dev.chribru.android.activities.recipe.RecipeActivity;
+import dev.chribru.android.activities.recipe.RecipeViewModel;
 import dev.chribru.android.R;
+import dev.chribru.android.activities.recipe.RecipeDetailFragment;
 import dev.chribru.android.data.models.Recipe;
-import dev.chribru.android.dummy.DummyContent;
 
 import java.util.List;
 
@@ -32,7 +27,7 @@ import java.util.List;
  * item details. On tablets, the activity presents the list of items and
  * item details side-by-side using two vertical panes.
  */
-public class RecipeOverviewActivity extends AppCompatActivity {
+public class RecipeOverviewActivity extends AppCompatActivity implements OnRecipeClickHandler {
 
     /**
      * Whether or not the activity is in two-pane mode, i.e. running on a tablet
@@ -49,7 +44,7 @@ public class RecipeOverviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_overview);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
@@ -70,7 +65,7 @@ public class RecipeOverviewActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        adapter = new SimpleItemRecyclerViewAdapter(this, recipes, mTwoPane);
+        adapter = new SimpleItemRecyclerViewAdapter(recipes, mTwoPane, this);
         recyclerView.setAdapter(adapter);
     }
 
@@ -79,4 +74,20 @@ public class RecipeOverviewActivity extends AppCompatActivity {
         this.adapter.setRecipes(recipes);
     }
 
+    @Override
+    public void onClick(Recipe recipe) {
+        // TODO add content provider
+
+        // TODO: tablet layout
+        if (mTwoPane) {
+            RecipeDetailFragment fragment = new RecipeDetailFragment();
+            this.getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.item_detail_container, fragment)
+                    .commit();
+        } else {
+            // start recipe activity passing in the ID of the recipe
+            Intent intent = new Intent(this, RecipeActivity.class);
+            this.startActivity(intent);
+        }
+    }
 }

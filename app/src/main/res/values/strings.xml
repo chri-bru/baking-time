@@ -5,4 +5,5 @@
     <!-- content descriptions for UI controls -->
     <string name="overview_img">An image showcasing the recipe.</string>
     <string name="overview_alt_display_icon">A cake icon to show the recipe in an exemplary way.</string>
+    <string name="recipe_img">An image showcasing the recipe. In case the recipe has no image, a cake icon is shown.</string>
 </resources>
