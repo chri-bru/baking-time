@@ -53,6 +53,10 @@ public class Step {
         return id;
     }
 
+    public String getIdAsString() {
+        return id.toString();
+    }
+
     public void setId(Integer id) {
         this.id = id;
     }

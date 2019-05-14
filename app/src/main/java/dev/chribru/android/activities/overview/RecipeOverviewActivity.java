@@ -64,7 +64,7 @@ public class RecipeOverviewActivity extends AppCompatActivity implements OnRecip
     }
 
     private void setupRecyclerView(@NonNull RecyclerView recyclerView) {
-        adapter = new SimpleItemRecyclerViewAdapter(recipes, mTwoPane, this);
+        adapter = new SimpleItemRecyclerViewAdapter(recipes, this);
         recyclerView.setAdapter(adapter);
     }
 

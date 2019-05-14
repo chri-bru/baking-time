@@ -17,16 +17,13 @@ import dev.chribru.android.data.models.Recipe;
 public class SimpleItemRecyclerViewAdapter
         extends RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder> {
 
-    private final boolean mTwoPane;
     private List<Recipe> recipes;
 
     private final OnRecipeClickHandler mOnClickListener;
 
     SimpleItemRecyclerViewAdapter(List<Recipe> recipes,
-                                  boolean twoPane,
                                   OnRecipeClickHandler onClickListener) {
         this.recipes = recipes;
-        mTwoPane = twoPane;
         mOnClickListener = onClickListener;
     }
 

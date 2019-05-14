@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -72,7 +73,15 @@ public class RecipeRepository {
             return dao.get(id);
         }
 
-        return Transformations.map(recipes, input -> input.get(id));
+        // mapping required as adapter position is 0 based, recipe IDs start at 1
+        return Transformations.map(recipes, input -> {
+            for (Recipe recipe : input) {
+                if (recipe.getId() == id) {
+                    return recipe;
+                }
+            }
+            return null;
+        });
     }
 
     private void refreshData() {

@@ -12,9 +12,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.RecyclerView;
 import dev.chribru.android.R;
 import dev.chribru.android.activities.overview.RecipeOverviewActivity;
 import dev.chribru.android.data.models.Recipe;
+import dev.chribru.android.data.models.Step;
 
 /**
  * A fragment representing a single Item detail screen.
@@ -22,11 +24,13 @@ import dev.chribru.android.data.models.Recipe;
  * in two-pane mode (on tablets) or a {@link RecipeActivity}
  * on handsets.
  */
-public class RecipeDetailFragment extends Fragment {
+public class RecipeDetailFragment extends Fragment implements OnStepClickListener{
     /**
      * The item id for the recipe to be used for extras
      */
     public static String ARG_ITEM_ID = "item_id";
+
+    private StepRecyclerViewAdapter adapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -59,7 +63,10 @@ public class RecipeDetailFragment extends Fragment {
                 // set image to recipe image (no recipe has an image, so disregard for now)
             }
 
-            // TODO add adapter
+            RecyclerView recyclerView = this.getActivity().findViewById(R.id.step_list);
+            assert recyclerView != null;
+            adapter = new StepRecyclerViewAdapter(recipe.getSteps(), this);
+            recyclerView.setAdapter(adapter);
         }
 
     }
@@ -69,5 +76,10 @@ public class RecipeDetailFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.recipe_detail, container, false);
         return rootView;
+    }
+
+    @Override
+    public void OnClick(Step step) {
+
     }
 }
