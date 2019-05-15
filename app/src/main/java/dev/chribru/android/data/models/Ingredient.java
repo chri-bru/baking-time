@@ -42,6 +42,10 @@ public class Ingredient {
         return quantity;
     }
 
+    public String getQuantityAsString() {
+        return Float.toString(quantity);
+    }
+
     public void setQuantity(float quantity) {
         this.quantity = quantity;
     }

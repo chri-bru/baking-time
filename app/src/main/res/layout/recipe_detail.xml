@@ -5,14 +5,42 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    style="@style/CommonLayoutPaddings">
 
     <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/item_detail"
-        style="?android:attr/textAppearanceLarge"
+        android:id="@+id/ingredient_list_heading"
+        style="?android:attr/textAppearanceMedium"
+        android:text="@string/ingredient_title"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:textIsSelectable="true"
+        tools:context=".activities.recipe.RecipeDetailFragment" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/ingredient_list"
+        style="@style/RecyclerViewList"
+        android:layout_marginBottom="16dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:context=".activities.recipe.RecipeActivity"
+        tools:listitem="@layout/recipe_ingredients_content" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/step_list_heading"
+        style="?android:attr/textAppearanceMedium"
+        android:text="@string/step_title"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
         android:textIsSelectable="true"
         tools:context=".activities.recipe.RecipeDetailFragment" />
 

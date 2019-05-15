@@ -30,7 +30,8 @@ public class RecipeDetailFragment extends Fragment implements OnStepClickListene
      */
     public static String ARG_ITEM_ID = "item_id";
 
-    private StepRecyclerViewAdapter adapter;
+    private StepRecyclerViewAdapter stepAdapter;
+    private IngredientRecyclerViewAdapter ingredientAdapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -63,10 +64,15 @@ public class RecipeDetailFragment extends Fragment implements OnStepClickListene
                 // set image to recipe image (no recipe has an image, so disregard for now)
             }
 
-            RecyclerView recyclerView = this.getActivity().findViewById(R.id.step_list);
-            assert recyclerView != null;
-            adapter = new StepRecyclerViewAdapter(recipe.getSteps(), this);
-            recyclerView.setAdapter(adapter);
+            RecyclerView stepsView = this.getActivity().findViewById(R.id.step_list);
+            assert stepsView != null;
+            stepAdapter = new StepRecyclerViewAdapter(recipe.getSteps(), this);
+            stepsView.setAdapter(stepAdapter);
+
+            RecyclerView ingredientView = this.getActivity().findViewById(R.id.ingredient_list);
+            assert ingredientView != null;
+            ingredientAdapter = new IngredientRecyclerViewAdapter(recipe.getIngredients());
+            ingredientView.setAdapter(ingredientAdapter);
         }
 
     }
