@@ -2,6 +2,7 @@ package dev.chribru.android.activities.recipe;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,6 +16,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 import dev.chribru.android.R;
 import dev.chribru.android.activities.overview.RecipeOverviewActivity;
+import dev.chribru.android.activities.step.StepActivity;
 import dev.chribru.android.data.models.Recipe;
 import dev.chribru.android.data.models.Step;
 
@@ -32,6 +34,8 @@ public class RecipeDetailFragment extends Fragment implements OnStepClickListene
 
     private StepRecyclerViewAdapter stepAdapter;
     private IngredientRecyclerViewAdapter ingredientAdapter;
+
+    private int recipeId;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -52,6 +56,8 @@ public class RecipeDetailFragment extends Fragment implements OnStepClickListene
         if (recipe == null) {
             return;
         }
+
+        recipeId = recipe.getId();
 
         CollapsingToolbarLayout appBarLayout = this.getActivity().findViewById(R.id.toolbar_layout);
 
@@ -86,6 +92,9 @@ public class RecipeDetailFragment extends Fragment implements OnStepClickListene
 
     @Override
     public void OnClick(Step step) {
-
+        Intent intent = new Intent(getActivity(), StepActivity.class);
+        intent.putExtra(StepActivity.ARG_RECIPE_ID, recipeId);
+        intent.putExtra(StepActivity.ARG_STEP_ID, step.getId());
+        this.startActivity(intent);
     }
 }

@@ -79,7 +79,6 @@ public class RecipeOverviewActivity extends AppCompatActivity implements OnRecip
 
         // TODO: tablet layout
         if (mTwoPane) {
-            // TODO add bundle with recipe id
             RecipeDetailFragment fragment = new RecipeDetailFragment();
             this.getSupportFragmentManager().beginTransaction()
                     .replace(R.id.item_detail_container, fragment)

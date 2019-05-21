@@ -44,6 +44,7 @@ public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerVi
         Step step = steps.get(position);
         holder.stepNumber.setText(step.getIdAsString());
         holder.stepDescription.setText(step.getShortDescription());
+        holder.itemView.setOnClickListener(holder);
     }
 
     @Override
