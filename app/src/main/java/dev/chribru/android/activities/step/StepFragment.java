@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -49,16 +50,16 @@ public class StepFragment extends Fragment {
         TextView title = view.findViewById(R.id.step_detail_title);
         TextView description = view.findViewById(R.id.step_detail_description);
         TextView stepNumber = view.findViewById(R.id.step_detail_number);
+        PlayerView playerView = view.findViewById(R.id.exo_player);
 
         Step step = viewModel.getStepInRecipe(stepNo);
 
         if (!TextUtils.isEmpty(step.getVideoURL())) {
             exoPlayer = ExoPlayerFactory.newSimpleInstance(getContext());
-            PlayerView playerView = view.findViewById(R.id.exo_player);
             playerView.setPlayer(exoPlayer);
             prepareDataSource(step);
         } else {
-            // TODO think of an alternative display
+            playerView.setVisibility(View.INVISIBLE);
         }
 
         title.setText(step.getShortDescription());
@@ -68,7 +69,6 @@ public class StepFragment extends Fragment {
         }
 
         stepNumber.setText(String.valueOf(stepNo));
-
         return view;
     }
 

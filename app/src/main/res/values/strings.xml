@@ -8,4 +8,6 @@
     <string name="overview_img">An image showcasing the recipe.</string>
     <string name="overview_alt_display_icon">A cake icon to show the recipe in an exemplary way.</string>
     <string name="recipe_img">An image showcasing the recipe. In case the recipe has no image, a cake icon is shown.</string>
+    <string name="navigate_forwards">An image indicating the possibility to navigate forward.</string>
+    <string name="navigate_backwards">An image indicating the possibility to navigate backward.</string>
 </resources>

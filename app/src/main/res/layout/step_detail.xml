@@ -38,8 +38,9 @@
 
     <TextView
         android:id="@+id/step_detail_title"
-        android:layout_width="293dp"
-        android:layout_height="31dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         app:layout_constraintBottom_toBottomOf="@+id/step_detail_number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/step_detail_number"

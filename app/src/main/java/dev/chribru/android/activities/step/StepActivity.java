@@ -2,6 +2,9 @@ package dev.chribru.android.activities.step;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.material.appbar.AppBarLayout;
 
@@ -32,6 +35,9 @@ public class StepActivity extends AppCompatActivity {
     private PagerAdapter adapter;
     private int recipeId;
     private int stepId;
+    private ImageView arrowForward;
+    private ImageView arrowBack;
+    private int numberOfSteps;
 
 
     @Override
@@ -57,6 +63,11 @@ public class StepActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
     private void updateUi(List<Step> steps) {
         if (steps == null) {
             return;
@@ -66,6 +77,37 @@ public class StepActivity extends AppCompatActivity {
         adapter = new StepPagerAdapter(getSupportFragmentManager(), steps);
         pager.setAdapter(adapter);
         pager.setCurrentItem(stepId, true);
+
+        // update bottom bar
+        TextView currentStep = findViewById(R.id.current_step_indicator);
+        arrowForward = findViewById(R.id.right_arrow);
+        arrowBack = findViewById(R.id.left_arrow);
+        numberOfSteps = steps.size();
+
+        currentStep.setText(String.valueOf(stepId) + "/" + String.valueOf(numberOfSteps));
+        toggleArrowVisibility();
+
+        arrowForward.setOnClickListener(v -> {
+            stepId+=1;
+            pager.setCurrentItem(stepId, true);
+            currentStep.setText(String.valueOf(stepId) + "/" + String.valueOf(numberOfSteps));
+            toggleArrowVisibility();
+        });
+        arrowBack.setOnClickListener(v -> {
+            stepId-=1;
+            pager.setCurrentItem(stepId--, true);
+            currentStep.setText(String.valueOf(stepId) + "/" + String.valueOf(numberOfSteps));
+            toggleArrowVisibility();
+        });
+    }
+
+    private void toggleArrowVisibility() {
+        if (stepId == 0) {
+            arrowBack.setVisibility(View.INVISIBLE);
+        }
+        if (stepId == numberOfSteps) {
+            arrowForward.setVisibility(View.INVISIBLE);
+        }
     }
 
     @Override
