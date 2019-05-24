@@ -16,7 +16,9 @@ public class StepsViewModel extends AndroidViewModel {
     private final RecipeRepository repository;
 
     private List<Step> steps;
-    private int numberOfSteps;
+    private int recipeId;
+
+    private int currentStepId;
 
     public StepsViewModel(@NonNull Application application) {
         super(application);
@@ -24,19 +26,27 @@ public class StepsViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<Step>> getSteps(int recipeId) {
+        this.recipeId = recipeId;
         return Transformations.map(repository.get(recipeId), recipe -> recipe.getSteps());
     }
 
     public void setSteps(List<Step> steps) {
         this.steps = steps;
-        this.numberOfSteps = steps.size();
     }
 
     public Step getStepInRecipe(int step) {
         return steps != null ? steps.get(step) : null;
     }
 
-    public int getNumberOfSteps() {
-        return numberOfSteps;
+    public int getRecipeId() {
+        return recipeId;
+    }
+
+    public int getCurrentStepId() {
+        return currentStepId;
+    }
+
+    public void setCurrentStepId(int currentStepId) {
+        this.currentStepId = currentStepId;
     }
 }

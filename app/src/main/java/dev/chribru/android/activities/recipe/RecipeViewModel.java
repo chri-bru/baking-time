@@ -10,6 +10,7 @@ import dev.chribru.android.data.models.Recipe;
 
 public class RecipeViewModel extends AndroidViewModel {
     private final RecipeRepository repository;
+
     private int selectedId;
     private final Application app;
 
@@ -21,6 +22,10 @@ public class RecipeViewModel extends AndroidViewModel {
 
     public void select(int id) {
         selectedId = id;
+    }
+
+    public int getSelectedId() {
+        return selectedId;
     }
 
     public LiveData<Recipe> getSelected() {

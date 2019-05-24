@@ -1,62 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:fillViewport="true">
 
-    <com.google.android.exoplayer2.ui.PlayerView
-        android:id="@+id/exo_player"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:show_buffering="when_playing"
-        app:show_shuffle_button="false"
-        app:surface_type="surface_view" />
+        android:layout_height="match_parent"
+        android:padding="16dp">
 
-    <TextView
-        android:id="@+id/step_detail_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/circle"
-        android:gravity="center"
-        android:minWidth="48dp"
-        android:minHeight="48dp"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/exo_player"
-        tools:text="1" />
+        <com.google.android.exoplayer2.ui.PlayerView
+            android:id="@+id/exo_player"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:show_buffering="when_playing"
+            app:show_shuffle_button="false"
+            app:surface_type="surface_view" />
 
-    <TextView
-        android:id="@+id/step_detail_title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        app:layout_constraintBottom_toBottomOf="@+id/step_detail_number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/step_detail_number"
-        app:layout_constraintTop_toTopOf="@+id/step_detail_number"
-        tools:text="Step 1: Preheat the oven" />
+        <TextView
+            android:id="@+id/step_detail_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/circle"
+            android:gravity="center"
+            android:minWidth="48dp"
+            android:minHeight="48dp"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/exo_player"
+            tools:text="1" />
 
-    <TextView
-        android:id="@+id/step_detail_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="@+id/step_detail_title"
-        app:layout_constraintStart_toStartOf="@+id/step_detail_number"
-        app:layout_constraintTop_toBottomOf="@+id/step_detail_number"
-        tools:text="Go to your oven, turn some dial until 180°C is at the top and press start" />
+        <TextView
+            android:id="@+id/step_detail_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            app:layout_constraintBottom_toBottomOf="@+id/step_detail_number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/step_detail_number"
+            app:layout_constraintTop_toTopOf="@+id/step_detail_number"
+            tools:text="Step 1: Preheat the oven" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/step_detail_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintEnd_toEndOf="@+id/step_detail_title"
+            app:layout_constraintStart_toStartOf="@+id/step_detail_number"
+            app:layout_constraintTop_toBottomOf="@+id/step_detail_number"
+            tools:text="Go to your oven, turn some dial until 180°C is at the top and press start" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

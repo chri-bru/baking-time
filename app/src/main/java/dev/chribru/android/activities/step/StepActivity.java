@@ -59,13 +59,14 @@ public class StepActivity extends AppCompatActivity {
         if (getIntent().hasExtra(ARG_RECIPE_ID) && getIntent().hasExtra(ARG_STEP_ID)) {
             recipeId = getIntent().getIntExtra(ARG_RECIPE_ID, 0);
             stepId = getIntent().getIntExtra(ARG_STEP_ID, 0);
-            viewModel.getSteps(recipeId).observe(this, this::updateUi);
+            viewModel.setCurrentStepId(stepId);
+        } else {
+            // e.g. device rotation happened
+            recipeId = viewModel.getRecipeId();
+            stepId = viewModel.getCurrentStepId();
         }
-    }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+        viewModel.getSteps(recipeId).observe(this, this::updateUi);
     }
 
     private void updateUi(List<Step> steps) {
@@ -79,24 +80,25 @@ public class StepActivity extends AppCompatActivity {
         pager.setCurrentItem(stepId, true);
 
         // update bottom bar
-        TextView currentStep = findViewById(R.id.current_step_indicator);
+        TextView stepCounterTv = findViewById(R.id.current_step_indicator);
         arrowForward = findViewById(R.id.right_arrow);
         arrowBack = findViewById(R.id.left_arrow);
         numberOfSteps = steps.size();
 
-        currentStep.setText(String.valueOf(stepId) + "/" + String.valueOf(numberOfSteps));
+        stepCounterTv.setText(String.valueOf(stepId) + "/" + String.valueOf(numberOfSteps));
         toggleArrowVisibility();
 
         arrowForward.setOnClickListener(v -> {
-            stepId+=1;
+            setStepId(++stepId);
+            viewModel.setCurrentStepId(stepId);
             pager.setCurrentItem(stepId, true);
-            currentStep.setText(String.valueOf(stepId) + "/" + String.valueOf(numberOfSteps));
+            stepCounterTv.setText(String.valueOf(stepId) + "/" + String.valueOf(numberOfSteps));
             toggleArrowVisibility();
         });
         arrowBack.setOnClickListener(v -> {
-            stepId-=1;
+            setStepId(--stepId);
             pager.setCurrentItem(stepId--, true);
-            currentStep.setText(String.valueOf(stepId) + "/" + String.valueOf(numberOfSteps));
+            stepCounterTv.setText(String.valueOf(stepId) + "/" + String.valueOf(numberOfSteps));
             toggleArrowVisibility();
         });
     }
@@ -108,6 +110,11 @@ public class StepActivity extends AppCompatActivity {
         if (stepId == numberOfSteps) {
             arrowForward.setVisibility(View.INVISIBLE);
         }
+    }
+
+    private void setStepId(int newStepId) {
+        this.stepId = newStepId;
+        viewModel.setCurrentStepId(stepId);
     }
 
     @Override

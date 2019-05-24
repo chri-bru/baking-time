@@ -21,6 +21,8 @@ import android.view.MenuItem;
  */
 public class RecipeActivity extends AppCompatActivity {
 
+    private int recipeId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,10 +36,13 @@ public class RecipeActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        RecipeViewModel viewModel = ViewModelProviders.of(this).get(RecipeViewModel.class);
+
         if (getIntent().hasExtra(RecipeDetailFragment.ARG_ITEM_ID)) {
-            int id = getIntent().getIntExtra(RecipeDetailFragment.ARG_ITEM_ID, 1);
-            RecipeViewModel viewModel = ViewModelProviders.of(this).get(RecipeViewModel.class);
-            viewModel.select(id);
+            recipeId = getIntent().getIntExtra(RecipeDetailFragment.ARG_ITEM_ID, 1);
+            viewModel.select(recipeId);
+        } else {
+            recipeId = viewModel.getSelectedId();
         }
 
         // savedInstanceState is non-null when there is fragment state
