@@ -38,6 +38,7 @@ public class StepActivity extends AppCompatActivity {
     private ImageView arrowForward;
     private ImageView arrowBack;
     private int numberOfSteps;
+    private TextView stepCounterTv;
 
 
     @Override
@@ -80,32 +81,54 @@ public class StepActivity extends AppCompatActivity {
         pager.setCurrentItem(stepId, true);
 
         // update bottom bar
-        TextView stepCounterTv = findViewById(R.id.current_step_indicator);
+        stepCounterTv = findViewById(R.id.current_step_indicator);
         arrowForward = findViewById(R.id.right_arrow);
         arrowBack = findViewById(R.id.left_arrow);
-        numberOfSteps = steps.size();
+        numberOfSteps = steps.size() -1;
 
         stepCounterTv.setText(String.valueOf(stepId) + "/" + String.valueOf(numberOfSteps));
         toggleArrowVisibility();
 
         arrowForward.setOnClickListener(v -> {
             setStepId(++stepId);
-            viewModel.setCurrentStepId(stepId);
-            pager.setCurrentItem(stepId, true);
-            stepCounterTv.setText(String.valueOf(stepId) + "/" + String.valueOf(numberOfSteps));
-            toggleArrowVisibility();
+            updateStepCounter();
         });
         arrowBack.setOnClickListener(v -> {
             setStepId(--stepId);
-            pager.setCurrentItem(stepId--, true);
-            stepCounterTv.setText(String.valueOf(stepId) + "/" + String.valueOf(numberOfSteps));
-            toggleArrowVisibility();
+            updateStepCounter();
         });
+
+        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                setStepId(position);
+                updateStepCounter();
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+    }
+
+    private void updateStepCounter() {
+        pager.setCurrentItem(stepId, true);
+        viewModel.setCurrentStepId(stepId);
+        stepCounterTv.setText(String.valueOf(stepId) + "/" + String.valueOf(numberOfSteps));
+        toggleArrowVisibility();
     }
 
     private void toggleArrowVisibility() {
         if (stepId == 0) {
             arrowBack.setVisibility(View.INVISIBLE);
+        } else {
+            arrowBack.setVisibility(View.VISIBLE);
         }
         if (stepId == numberOfSteps) {
             arrowForward.setVisibility(View.INVISIBLE);
