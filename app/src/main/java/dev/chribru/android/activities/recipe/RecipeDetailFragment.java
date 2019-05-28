@@ -5,6 +5,8 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
@@ -36,6 +38,8 @@ public class RecipeDetailFragment extends Fragment implements OnStepClickListene
     private IngredientRecyclerViewAdapter ingredientAdapter;
 
     private int recipeId;
+    private RecyclerView stepsView;
+    private RecyclerView ingredientView;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -47,9 +51,27 @@ public class RecipeDetailFragment extends Fragment implements OnStepClickListene
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        Bundle bundle = this.getArguments();
 
         RecipeViewModel viewModel = ViewModelProviders.of(getActivity()).get(RecipeViewModel.class);
+
+        if (bundle != null) {
+            recipeId = bundle.getInt(ARG_ITEM_ID);
+            viewModel.select(recipeId);
+        }
+
         viewModel.getSelected().observe(this, this::updateUi);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 
     private void updateUi(Recipe recipe) {
@@ -70,12 +92,10 @@ public class RecipeDetailFragment extends Fragment implements OnStepClickListene
                 // set image to recipe image (no recipe has an image, so disregard for now)
             }
 
-            RecyclerView stepsView = this.getActivity().findViewById(R.id.step_list);
             assert stepsView != null;
             stepAdapter = new StepRecyclerViewAdapter(recipe.getSteps(), this);
             stepsView.setAdapter(stepAdapter);
 
-            RecyclerView ingredientView = this.getActivity().findViewById(R.id.ingredient_list);
             assert ingredientView != null;
             ingredientAdapter = new IngredientRecyclerViewAdapter(recipe.getIngredients());
             ingredientView.setAdapter(ingredientAdapter);
@@ -87,6 +107,8 @@ public class RecipeDetailFragment extends Fragment implements OnStepClickListene
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.recipe_detail, container, false);
+        stepsView = rootView.findViewById(R.id.step_list);
+        ingredientView= rootView.findViewById(R.id.ingredient_list);
         return rootView;
     }
 

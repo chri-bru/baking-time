@@ -1,53 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    style="@style/CommonLayoutPaddings">
+    android:layout_height="match_parent">
 
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/ingredient_list_heading"
-        style="?android:attr/textAppearanceMedium"
-        android:text="@string/ingredient_title"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"
-        android:textIsSelectable="true"
-        tools:context=".activities.recipe.RecipeDetailFragment" />
+        android:orientation="vertical"
+        style="@style/CommonLayoutPaddings">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/ingredient_list"
-        style="@style/RecyclerViewList"
-        android:layout_marginBottom="16dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:context=".activities.recipe.RecipeActivity"
-        tools:listitem="@layout/recipe_ingredients_content" />
+        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/ingredient_list_heading"
+            style="?android:attr/textAppearanceMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/ingredient_title"
+            android:textIsSelectable="true"
+            tools:context=".activities.recipe.RecipeDetailFragment" />
 
-    <View
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/ingredient_list"
+            style="@style/RecyclerViewList"
+            android:layout_marginBottom="16dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:context=".activities.recipe.RecipeActivity"
+            tools:listitem="@layout/recipe_ingredients_content" />
 
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/step_list_heading"
-        style="?android:attr/textAppearanceMedium"
-        android:text="@string/step_title"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"
-        android:textIsSelectable="true"
-        tools:context=".activities.recipe.RecipeDetailFragment" />
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/step_list"
-        style="@style/RecyclerViewList"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:context=".activities.recipe.RecipeActivity"
-        tools:listitem="@layout/recipe_steps_content" />
-</LinearLayout>
+        <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/step_list_heading"
+            style="?android:attr/textAppearanceMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/step_title"
+            android:textIsSelectable="true"
+            tools:context=".activities.recipe.RecipeDetailFragment" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/step_list"
+            style="@style/RecyclerViewList"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:context=".activities.recipe.RecipeActivity"
+            tools:listitem="@layout/recipe_steps_content" />
+    </LinearLayout>
+
+</androidx.core.widget.NestedScrollView>

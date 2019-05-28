@@ -45,18 +45,18 @@
         android:id="@+id/left_arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="32dp"
+        android:layout_margin="12dp"
         android:contentDescription="@string/navigate_backwards"
         android:src="@drawable/ic_chevron_left_32dp"
-        android:layout_gravity="bottom|start"/>
+        android:layout_gravity="center_vertical|start"/>
 
     <ImageView
         android:id="@+id/right_arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="32dp"
+        android:layout_margin="12dp"
         android:contentDescription="@string/navigate_forwards"
         android:src="@drawable/ic_chevron_right_32dp"
-        android:layout_gravity="bottom|end" />
+        android:layout_gravity="center_vertical|end" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

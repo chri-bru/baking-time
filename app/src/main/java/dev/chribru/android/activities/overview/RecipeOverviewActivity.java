@@ -75,11 +75,12 @@ public class RecipeOverviewActivity extends AppCompatActivity implements OnRecip
 
     @Override
     public void onClick(Recipe recipe) {
-        // TODO add content provider
-
-        // TODO: tablet layout
+        // tablet layout
         if (mTwoPane) {
             RecipeDetailFragment fragment = new RecipeDetailFragment();
+            Bundle bundle = new Bundle();
+            bundle.putInt(RecipeDetailFragment.ARG_ITEM_ID, recipe.getId());
+            fragment.setArguments(bundle);
             this.getSupportFragmentManager().beginTransaction()
                     .replace(R.id.item_detail_container, fragment)
                     .commit();

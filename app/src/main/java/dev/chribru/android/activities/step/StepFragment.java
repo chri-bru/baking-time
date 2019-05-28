@@ -1,5 +1,7 @@
 package dev.chribru.android.activities.step;
 
+import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -59,7 +61,11 @@ public class StepFragment extends Fragment {
             playerView.setPlayer(exoPlayer);
             prepareDataSource(step);
         } else {
-            playerView.setVisibility(View.INVISIBLE);
+            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                playerView.setVisibility(View.INVISIBLE);
+            } else {
+                playerView.setVisibility(View.GONE);
+            }
         }
 
         title.setText(step.getShortDescription());
