@@ -44,7 +44,7 @@ public class SimpleItemRecyclerViewAdapter
         if (TextUtils.isEmpty(recipe.getImage())) {
             // no image available; use generic display
             holder.image.setVisibility(View.GONE);
-            holder.altDisplayContainer.setVisibility(View.VISIBLE);
+            holder.recipeName.setVisibility(View.VISIBLE);
             holder.recipeName.setText(recipe.getName());
         } else {
             // as the entire data set doesn't contain any image, disregard this case for now
@@ -66,12 +66,10 @@ public class SimpleItemRecyclerViewAdapter
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         final ImageView image;
         final TextView recipeName;
-        final LinearLayout altDisplayContainer;
 
         ViewHolder(View view) {
             super(view);
             image = view.findViewById(R.id.overview_recipe_img);
-            altDisplayContainer = view.findViewById(R.id.id_container_alt_display);
             recipeName = view.findViewById(R.id.recipe_name);
         }
 

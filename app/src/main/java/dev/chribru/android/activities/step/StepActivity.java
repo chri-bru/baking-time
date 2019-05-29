@@ -1,12 +1,9 @@
 package dev.chribru.android.activities.step;
 
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.google.android.material.appbar.AppBarLayout;
 
 import java.util.List;
 
@@ -24,7 +21,7 @@ import androidx.viewpager.widget.ViewPager;
 import dev.chribru.android.R;
 import dev.chribru.android.data.models.Step;
 
-public class StepActivity extends AppCompatActivity {
+public class StepActivity extends AppCompatActivity implements StepFragment.IStepProvider{
 
     public static String ARG_STEP_ID = "step_id";
     public static String ARG_RECIPE_ID = "recipe_id";
@@ -34,12 +31,11 @@ public class StepActivity extends AppCompatActivity {
     private ViewPager pager;
     private PagerAdapter adapter;
     private int recipeId;
-    private int stepId;
+    private int currentStepId;
     private ImageView arrowForward;
     private ImageView arrowBack;
     private int numberOfSteps;
     private TextView stepCounterTv;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,12 +55,12 @@ public class StepActivity extends AppCompatActivity {
 
         if (getIntent().hasExtra(ARG_RECIPE_ID) && getIntent().hasExtra(ARG_STEP_ID)) {
             recipeId = getIntent().getIntExtra(ARG_RECIPE_ID, 0);
-            stepId = getIntent().getIntExtra(ARG_STEP_ID, 0);
-            viewModel.setCurrentStepId(stepId);
+            currentStepId = getIntent().getIntExtra(ARG_STEP_ID, 0);
+            viewModel.setCurrentStepId(currentStepId);
         } else {
             // e.g. device rotation happened
             recipeId = viewModel.getRecipeId();
-            stepId = viewModel.getCurrentStepId();
+            currentStepId = viewModel.getCurrentStepId();
         }
 
         viewModel.getSteps(recipeId).observe(this, this::updateUi);
@@ -78,7 +74,7 @@ public class StepActivity extends AppCompatActivity {
         viewModel.setSteps(steps);
         adapter = new StepPagerAdapter(getSupportFragmentManager(), steps);
         pager.setAdapter(adapter);
-        pager.setCurrentItem(stepId, true);
+        pager.setCurrentItem(currentStepId, true);
 
         // update bottom bar
         stepCounterTv = findViewById(R.id.current_step_indicator);
@@ -86,15 +82,15 @@ public class StepActivity extends AppCompatActivity {
         arrowBack = findViewById(R.id.left_arrow);
         numberOfSteps = steps.size() -1;
 
-        stepCounterTv.setText(String.valueOf(stepId) + "/" + String.valueOf(numberOfSteps));
+        stepCounterTv.setText(String.valueOf(currentStepId) + "/" + String.valueOf(numberOfSteps));
         toggleArrowVisibility();
 
         arrowForward.setOnClickListener(v -> {
-            setStepId(++stepId);
+            setCurrentStepId(++currentStepId);
             updateStepCounter();
         });
         arrowBack.setOnClickListener(v -> {
-            setStepId(--stepId);
+            setCurrentStepId(--currentStepId);
             updateStepCounter();
         });
 
@@ -106,7 +102,7 @@ public class StepActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                setStepId(position);
+                setCurrentStepId(position);
                 updateStepCounter();
             }
 
@@ -118,26 +114,26 @@ public class StepActivity extends AppCompatActivity {
     }
 
     private void updateStepCounter() {
-        pager.setCurrentItem(stepId, true);
-        viewModel.setCurrentStepId(stepId);
-        stepCounterTv.setText(String.valueOf(stepId) + "/" + String.valueOf(numberOfSteps));
+        pager.setCurrentItem(currentStepId, true);
+        viewModel.setCurrentStepId(currentStepId);
+        stepCounterTv.setText(String.valueOf(currentStepId) + "/" + String.valueOf(numberOfSteps));
         toggleArrowVisibility();
     }
 
     private void toggleArrowVisibility() {
-        if (stepId == 0) {
+        if (currentStepId == 0) {
             arrowBack.setVisibility(View.INVISIBLE);
         } else {
             arrowBack.setVisibility(View.VISIBLE);
         }
-        if (stepId == numberOfSteps) {
+        if (currentStepId == numberOfSteps) {
             arrowForward.setVisibility(View.INVISIBLE);
         }
     }
 
-    private void setStepId(int newStepId) {
-        this.stepId = newStepId;
-        viewModel.setCurrentStepId(stepId);
+    private void setCurrentStepId(int newStepId) {
+        this.currentStepId = newStepId;
+        viewModel.setCurrentStepId(currentStepId);
     }
 
     @Override
@@ -152,6 +148,11 @@ public class StepActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    public Step getStep() {
+        return viewModel.getSteps().get(currentStepId);
+    }
+
     private class StepPagerAdapter extends FragmentStatePagerAdapter {
         private List<Step> steps;
 
@@ -164,6 +165,7 @@ public class StepActivity extends AppCompatActivity {
         @Override
         public Fragment getItem(int position) {
             StepFragment fragment = new StepFragment();
+            fragment.setStepProvider(StepActivity.this::getStep);
 
             Bundle args = new Bundle();
             args.putInt(StepFragment.ARG_STEP_NUMBER, position);

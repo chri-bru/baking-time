@@ -6,10 +6,7 @@
     style="@style/CommonCardLayout"
     app:cardBackgroundColor="@color/colorPrimaryDark">
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:orientation="horizontal"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="4dp"
@@ -17,22 +14,33 @@
 
         <TextView
             android:id="@+id/step_number"
-            android:background="@drawable/circle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/circle"
+            android:gravity="center"
             android:minWidth="48dp"
             android:minHeight="48dp"
-            android:gravity="center"
             android:textSize="18sp"
-            tools:text="1"/>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="1" />
 
         <TextView
             android:id="@+id/step_title"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            tools:text="Preheat the oven"/>
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/step_number"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/step_number"
+            app:layout_constraintTop_toBottomOf="@+id/step_number"
+            tools:text="Preheat the oven" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </LinearLayout>
 
 </androidx.cardview.widget.CardView>

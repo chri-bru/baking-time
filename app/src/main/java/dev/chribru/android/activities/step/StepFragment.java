@@ -30,14 +30,13 @@ import dev.chribru.android.data.models.Step;
 public class StepFragment extends Fragment {
     public static String ARG_STEP_NUMBER = "step_number";
     private int stepNo;
-    private StepsViewModel viewModel;
     private SimpleExoPlayer exoPlayer;
+
+    private IStepProvider stepProvider;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        viewModel = ViewModelProviders.of(getActivity()).get(StepsViewModel.class);
 
         if (getArguments() != null) {
             stepNo = getArguments().getInt(ARG_STEP_NUMBER);
@@ -54,7 +53,7 @@ public class StepFragment extends Fragment {
         TextView stepNumber = view.findViewById(R.id.step_detail_number);
         PlayerView playerView = view.findViewById(R.id.exo_player);
 
-        Step step = viewModel.getStepInRecipe(stepNo);
+        Step step = stepProvider.getStep();
 
         if (!TextUtils.isEmpty(step.getVideoURL())) {
             exoPlayer = ExoPlayerFactory.newSimpleInstance(getContext());
@@ -91,11 +90,19 @@ public class StepFragment extends Fragment {
         exoPlayer.prepare(videoSource);
     }
 
+    public void setStepProvider(IStepProvider stepProvider) {
+        this.stepProvider = stepProvider;
+    }
+
     @Override
     public void onStop() {
         super.onStop();
         if (exoPlayer != null) {
             exoPlayer.release();
         }
+    }
+
+    public interface IStepProvider {
+        Step getStep();
     }
 }

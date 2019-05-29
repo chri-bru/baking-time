@@ -23,13 +23,7 @@
             android:textIsSelectable="true"
             tools:context=".activities.recipe.RecipeDetailFragment" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/ingredient_list"
-            style="@style/RecyclerViewList"
-            android:layout_marginBottom="16dp"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:context=".activities.recipe.RecipeActivity"
-            tools:listitem="@layout/recipe_ingredients_content" />
+        <include layout="@layout/rv_ingredient_list" />
 
         <View
             android:id="@+id/divider"
@@ -48,12 +42,7 @@
             android:textIsSelectable="true"
             tools:context=".activities.recipe.RecipeDetailFragment" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/step_list"
-            style="@style/RecyclerViewList"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:context=".activities.recipe.RecipeActivity"
-            tools:listitem="@layout/recipe_steps_content" />
+        <include layout="@layout/rv_step_list" />
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

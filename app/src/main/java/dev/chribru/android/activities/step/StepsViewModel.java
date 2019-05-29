@@ -34,6 +34,10 @@ public class StepsViewModel extends AndroidViewModel {
         this.steps = steps;
     }
 
+    public List<Step> getSteps() {
+        return steps;
+    }
+
     public Step getStepInRecipe(int step) {
         return steps != null ? steps.get(step) : null;
     }

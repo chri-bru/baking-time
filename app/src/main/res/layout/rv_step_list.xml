@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- layout for the list of steps -->
+<androidx.recyclerview.widget.RecyclerView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/step_list"
+    style="@style/RecyclerViewList"
+    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+    tools:context=".activities.recipe.RecipeActivity"
+    tools:listitem="@layout/rv_recipe_steps_content" />

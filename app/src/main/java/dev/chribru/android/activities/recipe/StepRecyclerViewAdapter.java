@@ -31,7 +31,7 @@ public class StepRecyclerViewAdapter extends RecyclerView.Adapter<StepRecyclerVi
     @Override
     public StepViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.recipe_steps_content, parent, false);
+                .inflate(R.layout.rv_recipe_steps_content, parent, false);
         return new StepViewHolder(view);
     }
 
