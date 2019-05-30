@@ -153,6 +153,11 @@ public class StepActivity extends AppCompatActivity implements StepFragment.ISte
         return viewModel.getSteps().get(currentStepId);
     }
 
+    @Override
+    public Step get(int id) {
+        return viewModel.getSteps().get(id);
+    }
+
     private class StepPagerAdapter extends FragmentStatePagerAdapter {
         private List<Step> steps;
 
@@ -165,7 +170,7 @@ public class StepActivity extends AppCompatActivity implements StepFragment.ISte
         @Override
         public Fragment getItem(int position) {
             StepFragment fragment = new StepFragment();
-            fragment.setStepProvider(StepActivity.this::getStep);
+            fragment.setStepProvider(StepActivity.this);
 
             Bundle args = new Bundle();
             args.putInt(StepFragment.ARG_STEP_NUMBER, position);

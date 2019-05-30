@@ -53,7 +53,12 @@ public class StepFragment extends Fragment {
         TextView stepNumber = view.findViewById(R.id.step_detail_number);
         PlayerView playerView = view.findViewById(R.id.exo_player);
 
-        Step step = stepProvider.getStep();
+        Step step;
+        if (getArguments() != null) {
+            step = stepProvider.get(stepNo);
+        } else {
+            step = stepProvider.getStep();
+        }
 
         if (!TextUtils.isEmpty(step.getVideoURL())) {
             exoPlayer = ExoPlayerFactory.newSimpleInstance(getContext());
@@ -104,5 +109,6 @@ public class StepFragment extends Fragment {
 
     public interface IStepProvider {
         Step getStep();
+        Step get(int id);
     }
 }

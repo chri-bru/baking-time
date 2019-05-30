@@ -128,7 +128,7 @@ public class RecipeActivity extends AppCompatActivity implements OnStepClickList
         // using a fragment transaction.
         StepFragment fragment = new StepFragment();
         selectedStep = step;
-        fragment.setStepProvider(this::getStep);
+        fragment.setStepProvider(this);
         Bundle args = new Bundle();
         args.putInt(StepFragment.ARG_STEP_NUMBER, step.getId());
         fragment.setArguments(args);
@@ -140,6 +140,11 @@ public class RecipeActivity extends AppCompatActivity implements OnStepClickList
 
     @Override
     public Step getStep() {
+        return selectedStep;
+    }
+
+    @Override
+    public Step get(int id) {
         return selectedStep;
     }
 }
