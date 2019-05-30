@@ -48,6 +48,15 @@ public class RecipeRepository {
         return instance;
     }
 
+    /***
+     * Loads the recipe by ID for the widget.
+     * @param id    recipe id
+     * @return      the recipe associated with the id
+     */
+    public Recipe loadRecipe(int id) {
+        return dao.loadRecipe(id);
+    }
+
     /**
      * Returns all recipes found in Room.
      * @return  the list of recipes

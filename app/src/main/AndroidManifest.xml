@@ -40,6 +40,19 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".activities.step.StepActivity"/>
         </activity>
+
+        <!-- app widget -->
+        <receiver android:name=".activities.widget.IngredientWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/home_widget" />
+        </receiver>
+        <service
+            android:name=".activities.widget.ListViewWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS"/>
     </application>
 
 </manifest>

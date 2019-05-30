@@ -19,6 +19,9 @@ public interface RecipeDao {
     @Query("SELECT * FROM recipe WHERE id == :id")
     LiveData<Recipe> get(int id);
 
+    @Query("SELECT * FROM recipe WHERE id == :id")
+    Recipe loadRecipe(int id);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE) // there might be an update, so replace it
     void insert(List<Recipe> recipes);
 
