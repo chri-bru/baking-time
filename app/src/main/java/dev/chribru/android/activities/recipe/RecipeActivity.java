@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.ActionBar;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 import dev.chribru.android.R;
@@ -15,6 +16,7 @@ import dev.chribru.android.activities.step.StepFragment;
 import dev.chribru.android.data.models.Recipe;
 import dev.chribru.android.data.models.Step;
 
+import android.view.Menu;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
@@ -33,10 +35,14 @@ public class RecipeActivity extends AppCompatActivity implements OnStepClickList
      */
     private boolean mTwoPane;
 
+    // in memory vars for book keeping
+    private RecipeViewModel viewModel;
     private int recipeId;
-    private StepRecyclerViewAdapter adapter;
     private Recipe currentRecipe;
     private Step selectedStep;
+
+    private StepRecyclerViewAdapter adapter;
+    private Menu menu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +50,8 @@ public class RecipeActivity extends AppCompatActivity implements OnStepClickList
         setContentView(R.layout.activity_recipe);
         Toolbar toolbar = findViewById(R.id.detail_toolbar);
         setSupportActionBar(toolbar);
+
+        viewModel = ViewModelProviders.of(this).get(RecipeViewModel.class);
 
         if (findViewById(R.id.item_detail_container) != null) {
             // The detail container view will be present only in the
@@ -74,7 +82,7 @@ public class RecipeActivity extends AppCompatActivity implements OnStepClickList
             adapter = new StepRecyclerViewAdapter(new ArrayList<>(), this);
             stepView.setAdapter(adapter);
 
-            viewModel.getSelected().observe(this, this::populateUi);
+            viewModel.getSelected().observe(this, this::populateUiForTablet);
 
         } else {
             // savedInstanceState is non-null when there is fragment state
@@ -87,6 +95,7 @@ public class RecipeActivity extends AppCompatActivity implements OnStepClickList
             // http://developer.android.com/guide/components/fragments.html
             //
             if (savedInstanceState == null) {
+                viewModel.getSelected().observe(this, this::populateUi);
                 // Create the detail fragment and add it to the activity
                 // using a fragment transaction.
                 RecipeDetailFragment fragment = new RecipeDetailFragment();
@@ -97,29 +106,70 @@ public class RecipeActivity extends AppCompatActivity implements OnStepClickList
         }
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.recipe_detail_menu, menu);
+        this.menu = menu;
+        updateMenuIcon();
+        return true;
+    }
+
+    private void populateUiForTablet(Recipe recipe) {
+        if (recipe == null) {
+            return;
+        }
+
+        currentRecipe = recipe;
+        updateMenuIcon();
+        adapter.setSteps(recipe.getSteps());
+    }
+
     private void populateUi(Recipe recipe) {
         if (recipe == null) {
             return;
         }
 
         currentRecipe = recipe;
-        adapter.setSteps(recipe.getSteps());
+        updateMenuIcon();
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == android.R.id.home) {
-            // This ID represents the Home or Up button. In the case of this
-            // activity, the Up button is shown. For
-            // more details, see the Navigation pattern on Android Design:
-            //
-            // http://developer.android.com/design/patterns/navigation.html#up-vs-back
-            //
-            navigateUpTo(new Intent(this, RecipeOverviewActivity.class));
-            return true;
+
+        switch(id) {
+            case android.R.id.home:
+                // This ID represents the Home or Up button. In the case of this
+                // activity, the Up button is shown. For
+                // more details, see the Navigation pattern on Android Design:
+                //
+                // http://developer.android.com/design/patterns/navigation.html#up-vs-back
+                //
+                navigateUpTo(new Intent(this, RecipeOverviewActivity.class));
+                return true;
+            case R.id.add_to_widget:
+                if (currentRecipe.isShowInAppWidget()) {
+                    currentRecipe.setShowInAppWidget(false);
+                } else {
+                    currentRecipe.setShowInAppWidget(true);
+                }
+                viewModel.updateRecipe(currentRecipe);
+                updateMenuIcon();
         }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    private void updateMenuIcon() {
+        if (menu == null || currentRecipe == null) {
+            return;
+        }
+
+        int iconId = currentRecipe.isShowInAppWidget() ?
+                R.drawable.ic_star_black_24dp :
+                R.drawable.ic_star_border_black_24dp;
+
+        menu.getItem(0).setIcon(ContextCompat.getDrawable(this, iconId));
     }
 
     @Override

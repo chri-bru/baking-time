@@ -8,6 +8,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 import dev.chribru.android.data.models.Recipe;
 
 @Dao
@@ -19,11 +20,14 @@ public interface RecipeDao {
     @Query("SELECT * FROM recipe WHERE id == :id")
     LiveData<Recipe> get(int id);
 
-    @Query("SELECT * FROM recipe WHERE id == :id")
-    Recipe loadRecipe(int id);
+    @Query("SELECT * FROM recipe WHERE showInAppWidget == 1")
+    List<Recipe> loadRecipesForWidget();
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE) // there might be an update, so replace it
+    @Insert(onConflict = OnConflictStrategy.IGNORE) // there might be an update, so replace it
     void insert(List<Recipe> recipes);
+
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    void update(Recipe recipe);
 
     @Delete
     void delete(Recipe recipe);

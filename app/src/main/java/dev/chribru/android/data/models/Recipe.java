@@ -39,6 +39,9 @@ public class Recipe {
     @Expose
     private String image;
 
+    @Expose
+    private boolean showInAppWidget;
+
     /**
      * No args constructor for use in serialization
      *
@@ -55,7 +58,7 @@ public class Recipe {
      * @param image
      * @param steps
      */
-    public Recipe(Integer id, String name, List<Ingredient> ingredients, List<Step> steps, Integer servings, String image) {
+    public Recipe(Integer id, String name, List<Ingredient> ingredients, List<Step> steps, Integer servings, String image, boolean showInAppWidget) {
         super();
         this.id = id;
         this.name = name;
@@ -63,6 +66,7 @@ public class Recipe {
         this.steps = steps;
         this.servings = servings;
         this.image = image;
+        this.showInAppWidget = showInAppWidget;
     }
 
     public Integer getId() {
@@ -111,5 +115,13 @@ public class Recipe {
 
     public void setImage(String image) {
         this.image = image;
+    }
+
+    public boolean isShowInAppWidget() {
+        return showInAppWidget;
+    }
+
+    public void setShowInAppWidget(boolean showInAppWidget) {
+        this.showInAppWidget = showInAppWidget;
     }
 }

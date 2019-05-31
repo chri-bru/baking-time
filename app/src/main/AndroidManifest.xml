@@ -42,7 +42,7 @@
         </activity>
 
         <!-- app widget -->
-        <receiver android:name=".activities.widget.IngredientWidgetProvider">
+        <receiver android:name=".activities.widget.BakingTimeWidgetProvider">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>

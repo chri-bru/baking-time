@@ -49,12 +49,19 @@ public class RecipeRepository {
     }
 
     /***
-     * Loads the recipe by ID for the widget.
-     * @param id    recipe id
-     * @return      the recipe associated with the id
+     * Loads all recipes for the widget.
+     * @return      a list of recipes marked to be shown on the app widget
      */
-    public Recipe loadRecipe(int id) {
-        return dao.loadRecipe(id);
+    public List<Recipe> loadRecipes() {
+        return dao.loadRecipesForWidget();
+    }
+
+    /***
+     * Inserts or updates the given recipe in the database.
+     * @param recipe    the recipe to insert/update
+     */
+    public void insertOrUpdateRecipe(Recipe recipe) {
+        executor.execute(() -> dao.update(recipe));
     }
 
     /**

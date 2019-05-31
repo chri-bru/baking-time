@@ -3,15 +3,15 @@ package dev.chribru.android.activities.widget;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
 import dev.chribru.android.R;
-import dev.chribru.android.activities.recipe.RecipeActivity;
-import dev.chribru.android.activities.recipe.RecipeDetailFragment;
+import dev.chribru.android.activities.overview.RecipeOverviewActivity;
 
-public class IngredientWidgetProvider extends AppWidgetProvider {
+public class BakingTimeWidgetProvider extends AppWidgetProvider {
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -24,11 +24,10 @@ public class IngredientWidgetProvider extends AppWidgetProvider {
             RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.home_widget);
             views.setEmptyView(R.id.list_view, R.id.empty_widget);
 
-            // Create an Intent to launch the RecipeActivity
-            Intent intent = new Intent(context, RecipeActivity.class);
-            intent.putExtra(RecipeDetailFragment.ARG_ITEM_ID, 0); // TODO get recipe ID
+            // Create an Intent to launch the RecipeOverviewActivity
+            Intent intent = new Intent(context, RecipeOverviewActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
-            views.setOnClickPendingIntent(R.id.list_view_layout, pendingIntent);
+            views.setOnClickPendingIntent(R.id.widget_headline, pendingIntent);
 
             // setup collection
             views.setRemoteAdapter(R.id.list_view, new Intent(context, ListViewWidgetService.class));
@@ -38,5 +37,18 @@ public class IngredientWidgetProvider extends AppWidgetProvider {
             appWidgetManager.notifyAppWidgetViewDataChanged(appWidgetId, R.id.list_view);
         }
 
+    }
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        if (intent.getAction().equals(AppWidgetManager.ACTION_APPWIDGET_UPDATE)) {
+            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+            ComponentName thisAppWidget = new ComponentName(context.getPackageName(), BakingTimeWidgetProvider.class.getName());
+            int[] appWidgetIds = appWidgetManager.getAppWidgetIds(thisAppWidget);
+
+            onUpdate(context, appWidgetManager, appWidgetIds);
+        }
+
+        super.onReceive(context, intent);
     }
 }
