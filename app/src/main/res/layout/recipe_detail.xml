@@ -12,7 +12,6 @@
         style="@style/CommonLayoutPaddings">
 
         <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/ingredient_list_heading"
             style="?android:attr/textAppearanceMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,13 +24,11 @@
         <include layout="@layout/rv_ingredient_list" />
 
         <View
-            android:id="@+id/divider"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="?android:attr/listDivider" />
 
         <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/step_list_heading"
             style="?android:attr/textAppearanceMedium"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

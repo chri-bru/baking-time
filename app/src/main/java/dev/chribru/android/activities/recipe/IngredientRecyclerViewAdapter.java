@@ -13,7 +13,7 @@ import dev.chribru.android.R;
 import dev.chribru.android.data.models.Ingredient;
 
 public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<IngredientRecyclerViewAdapter.IngredientViewHolder> {
-    private List<Ingredient> ingredients;
+    private final List<Ingredient> ingredients;
 
     public IngredientRecyclerViewAdapter(List<Ingredient> ingredients) {
         this.ingredients = ingredients;
@@ -53,7 +53,7 @@ public class IngredientRecyclerViewAdapter extends RecyclerView.Adapter<Ingredie
         final TextView unit;
         final TextView name;
 
-        public IngredientViewHolder(@NonNull View itemView) {
+        IngredientViewHolder(@NonNull View itemView) {
             super(itemView);
             quantity = itemView.findViewById(R.id.ingredient_quantity);
             unit = itemView.findViewById(R.id.ingredient_measure);

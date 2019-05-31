@@ -33,12 +33,12 @@ public class Step {
     }
 
     /**
-     *
-     * @param id
-     * @param shortDescription
-     * @param description
-     * @param videoURL
-     * @param thumbnailURL
+     * Initializes a new step
+     * @param id                id of the step (unique)
+     * @param shortDescription  a short description for the step (title)
+     * @param description       a detailed description
+     * @param videoURL          URL to a video showcasing the step
+     * @param thumbnailURL      thumbnail image for the given step
      */
     public Step(Integer id, String shortDescription, String description, String videoURL, String thumbnailURL) {
         super();

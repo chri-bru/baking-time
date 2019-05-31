@@ -13,26 +13,15 @@
         android:scaleType="fitCenter"
         android:contentDescription="@string/overview_img"/>
 
-    <LinearLayout
-        android:id="@+id/id_container_alt_display"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/recipe_name"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_margin="8dp">
+        android:layout_gravity="center"
+        android:drawableTop="@drawable/ic_cake_white_48dp"
+        android:drawablePadding="8dp"
+        android:layout_margin="16dp"
+        android:contentDescription="@string/overview_alt_display_icon"
+        tools:text="Delicious Recipe"/>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_cake_white_48dp"
-            android:contentDescription="@string/overview_alt_display_icon"
-            android:layout_gravity="center"
-            android:layout_marginBottom="8dp"/>
-
-        <TextView
-            android:id="@+id/recipe_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            tools:text="Delicious Recipe"/>
-    </LinearLayout>
 </androidx.cardview.widget.CardView>

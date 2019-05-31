@@ -12,7 +12,7 @@ import dev.chribru.android.activities.widget.BakingTimeWidgetProvider;
 import dev.chribru.android.data.RecipeRepository;
 import dev.chribru.android.data.models.Recipe;
 
-public class RecipeViewModel extends AndroidViewModel {
+class RecipeViewModel extends AndroidViewModel {
     private final RecipeRepository repository;
 
     private int selectedId;
@@ -42,7 +42,7 @@ public class RecipeViewModel extends AndroidViewModel {
 
     /***
      * Retrieves the currently selected recipe (based on its id)
-     * from the respository
+     * from the repository
      * @return  the currently selected recipe
      */
     public LiveData<Recipe> getSelected() {

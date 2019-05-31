@@ -24,7 +24,8 @@
             android:minWidth="48dp"
             android:minHeight="48dp"
             android:textSize="18sp"
-            tools:text="1" />
+            tools:text="1"
+            tools:ignore="InconsistentLayout" />
 
         <TextView
             android:id="@+id/step_detail_title"

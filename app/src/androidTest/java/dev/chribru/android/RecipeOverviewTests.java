@@ -29,7 +29,6 @@ public class RecipeOverviewTests {
     @Test
     public void clickRecipe_RecipeDetailOpens() {
         String recipeName = "Brownies";
-        int recipeId = 1;
 
         // click on Brownies recipe
         Espresso.onView(withText(recipeName)).perform(click());

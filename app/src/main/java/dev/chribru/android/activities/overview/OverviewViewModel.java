@@ -9,7 +9,7 @@ import androidx.lifecycle.LiveData;
 import dev.chribru.android.data.RecipeRepository;
 import dev.chribru.android.data.models.Recipe;
 
-public class OverviewViewModel extends AndroidViewModel {
+class OverviewViewModel extends AndroidViewModel {
     private final RecipeRepository repository;
 
     public OverviewViewModel(Application application) {

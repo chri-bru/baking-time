@@ -29,7 +29,6 @@ public class RecipeOverviewActivity extends AppCompatActivity implements OnRecip
 
     private SimpleItemRecyclerViewAdapter adapter;
     private List<Recipe> recipes ;
-    private OverviewViewModel viewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +39,7 @@ public class RecipeOverviewActivity extends AppCompatActivity implements OnRecip
         setSupportActionBar(toolbar);
         toolbar.setTitle(getTitle());
 
-        viewModel = ViewModelProviders.of(this).get(OverviewViewModel.class);
+        OverviewViewModel viewModel = ViewModelProviders.of(this).get(OverviewViewModel.class);
         viewModel.getAll().observe(this, this::setRecipes);
 
         View recyclerView = findViewById(R.id.item_list);

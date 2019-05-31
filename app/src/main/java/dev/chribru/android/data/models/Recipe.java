@@ -50,13 +50,13 @@ public class Recipe {
     }
 
     /**
-     *
-     * @param ingredients
-     * @param id
-     * @param servings
-     * @param name
-     * @param image
-     * @param steps
+     * Initializes a new recipe with the given arguments
+     * @param ingredients   list of ingredients
+     * @param id            id for the recipe (unique)
+     * @param servings      number of servings
+     * @param name          name of the recipe
+     * @param image         image associated with the recipe (URL)
+     * @param steps         steps required to make the recipe
      */
     public Recipe(Integer id, String name, List<Ingredient> ingredients, List<Step> steps, Integer servings, String image, boolean showInAppWidget) {
         super();

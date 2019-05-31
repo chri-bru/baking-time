@@ -1,14 +1,12 @@
 package dev.chribru.android.activities.step;
 
 import android.content.res.Configuration;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.exoplayer2.ExoPlayerFactory;
@@ -20,15 +18,16 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
+import java.util.Objects;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
 import dev.chribru.android.R;
 import dev.chribru.android.data.models.Step;
 
 public class StepFragment extends Fragment {
-    public static String ARG_STEP_NUMBER = "step_number";
+    public static final String ARG_STEP_NUMBER = "step_number";
     private int stepNo;
     private SimpleExoPlayer exoPlayer;
 
@@ -61,7 +60,7 @@ public class StepFragment extends Fragment {
         }
 
         if (!TextUtils.isEmpty(step.getVideoURL())) {
-            exoPlayer = ExoPlayerFactory.newSimpleInstance(getContext());
+            exoPlayer = ExoPlayerFactory.newSimpleInstance(Objects.requireNonNull(getContext()));
             playerView.setPlayer(exoPlayer);
             prepareDataSource(step);
         } else {
@@ -86,7 +85,7 @@ public class StepFragment extends Fragment {
         Uri sourceUri = Uri.parse(step.getVideoURL());
 
         // Produces DataSource instances through which media data is loaded.
-        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getContext(),
+        DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(Objects.requireNonNull(getContext()),
                 Util.getUserAgent(getContext(), "yourApplicationName"));
         // This is the MediaSource representing the media to be played.
         MediaSource videoSource = new ProgressiveMediaSource.Factory(dataSourceFactory)

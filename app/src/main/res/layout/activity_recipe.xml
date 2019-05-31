@@ -12,7 +12,6 @@
     tools:ignore="MergeRootFrame">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:fitsSystemWindows="true"
@@ -35,7 +34,6 @@
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
             <ImageView
-                android:id="@+id/recipe_img"
                 tools:src="@drawable/ic_cake_white_48dp"
                 android:contentDescription="@string/recipe_img"
                 app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"

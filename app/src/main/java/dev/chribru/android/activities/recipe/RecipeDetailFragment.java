@@ -1,19 +1,20 @@
 package dev.chribru.android.activities.recipe;
 
-import com.google.android.material.appbar.CollapsingToolbarLayout;
-
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.RecyclerView;
 import dev.chribru.android.R;
@@ -32,10 +33,7 @@ public class RecipeDetailFragment extends Fragment implements OnStepClickListene
     /**
      * The item id for the recipe to be used for extras
      */
-    public static String ARG_ITEM_ID = "item_id";
-
-    private StepRecyclerViewAdapter stepAdapter;
-    private IngredientRecyclerViewAdapter ingredientAdapter;
+    public static final String ARG_ITEM_ID = "item_id";
 
     private int recipeId;
     private RecyclerView stepsView;
@@ -49,17 +47,13 @@ public class RecipeDetailFragment extends Fragment implements OnStepClickListene
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
         Bundle bundle = this.getArguments();
 
-        RecipeViewModel viewModel = ViewModelProviders.of(getActivity()).get(RecipeViewModel.class);
+        RecipeViewModel viewModel = ViewModelProviders.of(Objects.requireNonNull(getActivity()))
+                .get(RecipeViewModel.class);
 
         if (bundle != null) {
             recipeId = bundle.getInt(ARG_ITEM_ID);
@@ -67,11 +61,6 @@ public class RecipeDetailFragment extends Fragment implements OnStepClickListene
         }
 
         viewModel.getSelected().observe(this, this::updateUi);
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
     }
 
     private void updateUi(Recipe recipe) {
@@ -87,24 +76,22 @@ public class RecipeDetailFragment extends Fragment implements OnStepClickListene
             appBarLayout.setTitle(recipe.getName());
         }
 
-        if (recipe != null) {
-            if (!TextUtils.isEmpty(recipe.getImage())) {
-                // set image to recipe image (no recipe has an image, so disregard for now)
-            }
-
-            assert stepsView != null;
-            stepAdapter = new StepRecyclerViewAdapter(recipe.getSteps(), this);
-            stepsView.setAdapter(stepAdapter);
-
-            assert ingredientView != null;
-            ingredientAdapter = new IngredientRecyclerViewAdapter(recipe.getIngredients());
-            ingredientView.setAdapter(ingredientAdapter);
+        if (!TextUtils.isEmpty(recipe.getImage())) {
+            // set image to recipe image (no recipe has an image, so disregard for now)
         }
+
+        assert stepsView != null;
+        StepRecyclerViewAdapter stepAdapter = new StepRecyclerViewAdapter(recipe.getSteps(), this);
+        stepsView.setAdapter(stepAdapter);
+
+        assert ingredientView != null;
+        IngredientRecyclerViewAdapter ingredientAdapter = new IngredientRecyclerViewAdapter(recipe.getIngredients());
+        ingredientView.setAdapter(ingredientAdapter);
 
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NotNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.recipe_detail, container, false);
         stepsView = rootView.findViewById(R.id.step_list);

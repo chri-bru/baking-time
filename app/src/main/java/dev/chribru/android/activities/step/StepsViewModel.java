@@ -9,9 +9,10 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Transformations;
 import dev.chribru.android.data.RecipeRepository;
+import dev.chribru.android.data.models.Recipe;
 import dev.chribru.android.data.models.Step;
 
-public class StepsViewModel extends AndroidViewModel {
+class StepsViewModel extends AndroidViewModel {
 
     private final RecipeRepository repository;
 
@@ -27,7 +28,7 @@ public class StepsViewModel extends AndroidViewModel {
 
     public LiveData<List<Step>> getSteps(int recipeId) {
         this.recipeId = recipeId;
-        return Transformations.map(repository.get(recipeId), recipe -> recipe.getSteps());
+        return Transformations.map(repository.get(recipeId), Recipe::getSteps);
     }
 
     public void setSteps(List<Step> steps) {

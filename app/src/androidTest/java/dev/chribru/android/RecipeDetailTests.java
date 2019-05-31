@@ -32,7 +32,7 @@ import static org.hamcrest.Matchers.not;
 @RunWith(AndroidJUnit4.class)
 public class RecipeDetailTests {
 
-    public static final int RECIPE_ID = 1;
+    private static final int RECIPE_ID = 1;
 
     @Rule
     public ActivityTestRule<RecipeActivity> activityTestRule =

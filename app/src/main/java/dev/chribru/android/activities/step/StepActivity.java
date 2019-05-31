@@ -23,14 +23,12 @@ import dev.chribru.android.data.models.Step;
 
 public class StepActivity extends AppCompatActivity implements StepFragment.IStepProvider{
 
-    public static String ARG_STEP_ID = "step_id";
-    public static String ARG_RECIPE_ID = "recipe_id";
+    public static final String ARG_STEP_ID = "step_id";
+    public static final String ARG_RECIPE_ID = "recipe_id";
 
     private StepsViewModel viewModel;
 
     private ViewPager pager;
-    private PagerAdapter adapter;
-    private int recipeId;
     private int currentStepId;
     private ImageView arrowForward;
     private ImageView arrowBack;
@@ -53,6 +51,7 @@ public class StepActivity extends AppCompatActivity implements StepFragment.ISte
         viewModel = ViewModelProviders.of(this).get(StepsViewModel.class);
         pager = findViewById(R.id.step_pager);
 
+        int recipeId;
         if (getIntent().hasExtra(ARG_RECIPE_ID) && getIntent().hasExtra(ARG_STEP_ID)) {
             recipeId = getIntent().getIntExtra(ARG_RECIPE_ID, 0);
             currentStepId = getIntent().getIntExtra(ARG_STEP_ID, 0);
@@ -72,7 +71,7 @@ public class StepActivity extends AppCompatActivity implements StepFragment.ISte
         }
 
         viewModel.setSteps(steps);
-        adapter = new StepPagerAdapter(getSupportFragmentManager(), steps);
+        PagerAdapter adapter = new StepPagerAdapter(getSupportFragmentManager(), steps);
         pager.setAdapter(adapter);
         pager.setCurrentItem(currentStepId, true);
 
@@ -159,9 +158,9 @@ public class StepActivity extends AppCompatActivity implements StepFragment.ISte
     }
 
     private class StepPagerAdapter extends FragmentStatePagerAdapter {
-        private List<Step> steps;
+        private final List<Step> steps;
 
-        public StepPagerAdapter(@NonNull FragmentManager fm, List<Step> steps) {
+        StepPagerAdapter(@NonNull FragmentManager fm, List<Step> steps) {
             super(fm, FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
             this.steps = steps;
         }

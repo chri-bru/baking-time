@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -26,7 +28,7 @@ public class RecipeRepository {
     private final RecipeClient client;
     private final RecipeDao dao;
 
-    private MutableLiveData<List<Recipe>> recipes = new MutableLiveData<>();
+    private final MutableLiveData<List<Recipe>> recipes = new MutableLiveData<>();
 
     private RecipeRepository(Context context) {
         client = new RecipeClient(context);
@@ -109,7 +111,7 @@ public class RecipeRepository {
         protected Void doInBackground(Void... voids) {
             client.fetchRecipes().enqueue(new Callback<List<Recipe>>() {
                 @Override
-                public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
+                public void onResponse(@NotNull Call<List<Recipe>> call, @NotNull Response<List<Recipe>> response) {
                     if (response.isSuccessful()) {
                         recipes.setValue(response.body());
                         executor.execute(() -> dao.insert(response.body()));
@@ -117,7 +119,7 @@ public class RecipeRepository {
                 }
 
                 @Override
-                public void onFailure(Call<List<Recipe>> call, Throwable t) {
+                public void onFailure(@NotNull Call<List<Recipe>> call, @NotNull Throwable t) {
                     Log.w(this.getClass().getName(), "Recipe fetching failed!");
                 }
             });

@@ -25,10 +25,10 @@ public class Ingredient {
     }
 
     /**
-     *
-     * @param measure
-     * @param name
-     * @param quantity
+     * Initializes a new ingredients with the given parameters
+     * @param measure   measurement type (e.g. g, cup, ...)
+     * @param name      name of the ingredient
+     * @param quantity  quantity of the ingredient used for a recipe
      */
     public Ingredient(float quantity, String measure, String name) {
         super();
