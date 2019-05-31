@@ -67,8 +67,6 @@ public class RecipeActivity extends AppCompatActivity implements OnStepClickList
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        RecipeViewModel viewModel = ViewModelProviders.of(this).get(RecipeViewModel.class);
-
         if (getIntent().hasExtra(RecipeDetailFragment.ARG_ITEM_ID)) {
             recipeId = getIntent().getIntExtra(RecipeDetailFragment.ARG_ITEM_ID, 1);
             viewModel.select(recipeId);
