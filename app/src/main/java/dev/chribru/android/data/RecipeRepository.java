@@ -28,7 +28,7 @@ public class RecipeRepository {
     private final RecipeClient client;
     private final RecipeDao dao;
 
-    private final MutableLiveData<List<Recipe>> recipes = new MutableLiveData<>();
+    private LiveData<List<Recipe>> recipes = new MutableLiveData<>();
 
     private RecipeRepository(Context context) {
         client = new RecipeClient(context);
@@ -74,7 +74,7 @@ public class RecipeRepository {
         // data isn't in memory yet, retrieve it from the network
         if (recipes.getValue() == null) {
             refreshData();
-            return dao.getAll();
+            recipes = dao.getAll();
         }
         return recipes;
     }
@@ -113,7 +113,6 @@ public class RecipeRepository {
                 @Override
                 public void onResponse(@NotNull Call<List<Recipe>> call, @NotNull Response<List<Recipe>> response) {
                     if (response.isSuccessful()) {
-                        recipes.setValue(response.body());
                         executor.execute(() -> dao.insert(response.body()));
                     }
                 }

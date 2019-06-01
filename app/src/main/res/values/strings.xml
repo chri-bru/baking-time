@@ -14,4 +14,6 @@
     <!-- widget -->
     <string name="empty_widget_message">No recipe selected</string>
     <string name="add_to_widget_menu_item">Add to widget</string>
+    <string name="toast_recipe_show">This recipe will now be shown in the accompanying app widget.</string>
+    <string name="toast_recipe_remove">This recipe is now removed from the app widget.</string>
 </resources>

@@ -18,6 +18,9 @@ import dev.chribru.android.data.models.Step;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
@@ -148,8 +151,10 @@ public class RecipeActivity extends AppCompatActivity implements OnStepClickList
             case R.id.add_to_widget:
                 if (currentRecipe.isShowInAppWidget()) {
                     currentRecipe.setShowInAppWidget(false);
+                    Toast.makeText(this, getResources().getText(R.string.toast_recipe_remove), Toast.LENGTH_LONG).show();
                 } else {
                     currentRecipe.setShowInAppWidget(true);
+                    Toast.makeText(this, getResources().getText(R.string.toast_recipe_show), Toast.LENGTH_LONG).show();
                 }
                 viewModel.updateRecipe(currentRecipe);
                 updateMenuIcon();
@@ -184,11 +189,6 @@ public class RecipeActivity extends AppCompatActivity implements OnStepClickList
                 .replace(R.id.item_detail_container, fragment)
                 .addToBackStack(null)
                 .commit();
-    }
-
-    @Override
-    public Step getStep() {
-        return selectedStep;
     }
 
     @Override

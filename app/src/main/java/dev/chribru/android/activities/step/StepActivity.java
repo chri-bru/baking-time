@@ -81,7 +81,7 @@ public class StepActivity extends AppCompatActivity implements StepFragment.ISte
         arrowBack = findViewById(R.id.left_arrow);
         numberOfSteps = steps.size() -1;
 
-        stepCounterTv.setText(String.valueOf(currentStepId) + "/" + String.valueOf(numberOfSteps));
+        stepCounterTv.setText(currentStepId + "/" + numberOfSteps);
         toggleArrowVisibility();
 
         arrowForward.setOnClickListener(v -> {
@@ -148,11 +148,6 @@ public class StepActivity extends AppCompatActivity implements StepFragment.ISte
     }
 
     @Override
-    public Step getStep() {
-        return viewModel.getSteps().get(currentStepId);
-    }
-
-    @Override
     public Step get(int id) {
         return viewModel.getSteps().get(id);
     }
@@ -161,7 +156,7 @@ public class StepActivity extends AppCompatActivity implements StepFragment.ISte
         private final List<Step> steps;
 
         StepPagerAdapter(@NonNull FragmentManager fm, List<Step> steps) {
-            super(fm, FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
+            super(fm);
             this.steps = steps;
         }
 
