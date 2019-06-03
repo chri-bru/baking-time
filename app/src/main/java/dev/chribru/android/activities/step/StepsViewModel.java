@@ -12,7 +12,7 @@ import dev.chribru.android.data.RecipeRepository;
 import dev.chribru.android.data.models.Recipe;
 import dev.chribru.android.data.models.Step;
 
-class StepsViewModel extends AndroidViewModel {
+public class StepsViewModel extends AndroidViewModel {
 
     private final RecipeRepository repository;
 

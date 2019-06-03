@@ -12,7 +12,7 @@ import dev.chribru.android.activities.widget.BakingTimeWidgetProvider;
 import dev.chribru.android.data.RecipeRepository;
 import dev.chribru.android.data.models.Recipe;
 
-class RecipeViewModel extends AndroidViewModel {
+public class RecipeViewModel extends AndroidViewModel {
     private final RecipeRepository repository;
 
     private int selectedId;
